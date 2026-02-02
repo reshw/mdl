@@ -10,3 +10,6 @@ build/
 *.swo
 *~
 .vscode/settings.json
+
+# Local Netlify folder
+.netlify
