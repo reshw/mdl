@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>26/27 Smart Season Room - Operation Plan</title>
+    <title>26/27 시즌 업그레이드 - 확장과 프라이버시 강화</title>
 
     <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
     <style>
         :root {
@@ -19,6 +17,7 @@
             --text-muted: #888888;
             --highlight: #FFEE00;
             --success: #00FF88;
+            --old: #666666;
         }
 
         * {
@@ -32,17 +31,16 @@
             background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
             color: var(--text);
             line-height: 1.6;
-            padding-bottom: 100px;
-            max-width: 480px;
-            margin: 0 auto;
+            padding: 0;
+            min-height: 100vh;
         }
 
         /* Header */
         header {
             position: relative;
-            padding: 50px 24px 30px;
+            padding: 60px 40px 40px;
             text-align: center;
-            background: linear-gradient(180deg, rgba(0,229,255,0.05) 0%, transparent 100%);
+            background: linear-gradient(180deg, rgba(0,229,255,0.08) 0%, transparent 100%);
             border-bottom: 1px solid var(--card-border);
         }
 
@@ -51,15 +49,15 @@
             font-weight: 700;
             letter-spacing: 3px;
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 48px;
             font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
+            letter-spacing: -2px;
+            margin-bottom: 12px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -67,278 +65,277 @@
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 18px;
             color: var(--text-muted);
             font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .hero-stat {
+            display: inline-flex;
+            gap: 40px;
+            margin-top: 20px;
+            padding: 20px 40px;
+            background: rgba(0, 229, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
         }
 
         /* Section */
         section {
-            padding: 40px 24px;
-            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 80px;
         }
 
         h2 {
-            font-size: 20px;
+            font-size: 36px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Comparison Grid */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .comparison-side {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .comparison-side.old {
+            border-color: var(--old);
+        }
+
+        .comparison-side.new {
+            border-color: var(--primary);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+        }
+
+        .comparison-badge {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-badge.old {
+            background: var(--old);
+            color: #000;
+        }
+
+        .comparison-badge.new {
+            background: linear-gradient(135deg, var(--primary) 0%, #00B8D4 100%);
+            color: #000;
+        }
+
+        .comparison-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-align: center;
+            padding-top: 12px;
+        }
+
+        .room-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .room-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .section-desc {
-            font-size: 13px;
+        .room-details {
+            font-size: 14px;
             color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.5;
+            line-height: 2;
         }
 
-        /* Glass Card */
-        .glass-card {
+        .room-details strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .total-count {
+            text-align: center;
+            margin-top: 24px;
+            padding: 20px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+
+        .total-count-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .total-count-value {
+            font-size: 36px;
+            font-weight: 900;
+        }
+
+        .total-count-value.old {
+            color: var(--old);
+        }
+
+        .total-count-value.new {
+            color: var(--success);
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .benefit-card {
             background: rgba(20, 20, 20, 0.6);
             backdrop-filter: blur(10px);
             border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 32px;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
-        .glass-card:hover {
-            border-color: rgba(0, 229, 255, 0.3);
-            transform: translateY(-2px);
+        .benefit-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
         }
 
-        /* Zone Cards */
-        .zone-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
         }
 
-        .zone-name {
-            font-size: 18px;
+        .benefit-title {
+            font-size: 20px;
             font-weight: 700;
-        }
-
-        .badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .badge-party {
-            background: rgba(0, 229, 255, 0.15);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .badge-silent {
-            background: rgba(255, 42, 109, 0.15);
-            color: var(--secondary);
-            border: 1px solid var(--secondary);
-        }
-
-        .zone-concept {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--primary);
             margin-bottom: 12px;
+            color: var(--primary);
         }
 
-        .zone-details {
-            font-size: 13px;
+        .benefit-desc {
+            font-size: 14px;
             color: var(--text-muted);
             line-height: 1.8;
         }
 
-        .zone-details li {
-            margin-bottom: 6px;
-            padding-left: 16px;
-            position: relative;
-        }
-
-        .zone-details li::before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-        }
-
-        /* Warning Box */
-        .warning-box {
-            background: rgba(255, 238, 0, 0.08);
-            border: 1px solid rgba(255, 238, 0, 0.3);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 16px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: var(--highlight);
-        }
-
-        .warning-box strong {
-            font-weight: 700;
-        }
-
-        /* Pricing */
-        .price-highlight {
+        /* Key Changes */
+        .key-changes {
             background: linear-gradient(135deg, rgba(0,229,255,0.1) 0%, rgba(255,42,109,0.1) 100%);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            margin-bottom: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
         }
 
-        .price-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .price-value {
-            font-size: 36px;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-
-        .price-note {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .guest-fee {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid var(--card-border);
-        }
-
-        .guest-fee-label {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .guest-fee-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-
-        /* Role Cards */
-        .role-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 18px;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .role-card:hover {
-            border-color: var(--primary);
-        }
-
-        .role-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .role-icon {
+        .key-changes h3 {
             font-size: 24px;
-        }
-
-        .role-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .role-duty {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .role-benefit {
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
-            border-left: 3px solid var(--primary);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-align: center;
             color: var(--primary);
         }
 
-        /* Tech Features */
-        .features-grid {
+        .changes-list {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        .feature-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+        .change-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
             border-radius: 12px;
-            padding: 16px 12px;
-            text-align: center;
-            transition: all 0.3s ease;
+            border-left: 3px solid var(--success);
         }
 
-        .feature-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .feature-icon {
-            font-size: 28px;
+        .change-item-title {
+            font-size: 16px;
+            font-weight: 700;
             margin-bottom: 8px;
+            color: var(--success);
         }
 
-        .feature-name {
-            font-size: 11px;
-            font-weight: 600;
+        .change-item-desc {
+            font-size: 14px;
             color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        /* CTA Button */
-        .floating-cta {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 16px 24px 32px;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--card-border);
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,229,255,0.05) 100%);
         }
 
         .cta-btn {
-            width: 100%;
-            padding: 18px;
+            display: inline-block;
+            padding: 20px 60px;
             background: linear-gradient(135deg, var(--primary) 0%, #00B8D4 100%);
             color: #000;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 900;
             border: none;
             border-radius: 12px;
@@ -346,29 +343,46 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-decoration: none;
         }
 
         .cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 229, 255, 0.4);
+            box-shadow: 0 12px 32px rgba(0, 229, 255, 0.4);
         }
 
-        .cta-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Utility */
-        .text-gradient {
+        .price-badge {
+            display: inline-block;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-size: 24px;
+            font-weight: 900;
+            margin-right: 8px;
         }
 
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, var(--card-border) 50%, transparent 100%);
-            margin: 24px 0;
+        .arrow-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        @media (max-width: 1024px) {
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .changes-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -376,232 +390,198 @@
 
     <!-- Header -->
     <header>
-        <div class="logo">스마트 시즌룸</div>
-        <h1>26/27 운영 플랜</h1>
-        <p class="subtitle">자동화 시스템 · 프리미엄 경험</p>
+        <div class="logo">26/27 시즌 업그레이드</div>
+        <h1>확장과 프라이버시 강화</h1>
+        <p class="subtitle">기존 멤버 여러분께 드리는 다음 시즌 안내</p>
+
+        <div class="hero-stat">
+            <div class="stat-item">
+                <div class="stat-label">올 시즌</div>
+                <div class="stat-value">11명</div>
+            </div>
+            <div class="stat-item" style="color: var(--text-muted); font-size: 32px; font-weight: 900;">→</div>
+            <div class="stat-item">
+                <div class="stat-label">다음 시즌</div>
+                <div class="stat-value" style="color: var(--success);">19명</div>
+            </div>
+        </div>
     </header>
 
-    <!-- Pricing & Zone Section -->
-    <section>
-        <h2>🏠 호실 구조 및 가격</h2>
-        <p class="section-desc">1호실: 라운지 & 편안한 침대남 | 2호실: 숙면남 & 여성 전용</p>
+    <div class="container">
 
-        <!-- 1호실 Header -->
-        <div style="margin: 24px 0 12px; padding: 8px 0; border-bottom: 2px solid var(--primary);">
-            <h3 style="font-size: 18px; font-weight: 800; color: var(--primary);">🔵 1호실 (남성 전용)</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">라운지 와일드남 + 편안한 침대남 · 베란다: 남성전용 옷행거/장비보관</p>
-        </div>
+        <!-- Before/After Comparison -->
+        <section>
+            <h2>🔄 무엇이 달라지나요?</h2>
+            <p class="section-desc">
+                1호실만으로 운영하던 시스템에서 2호실을 추가, 총 19명 주중 멤버를 목표로 합니다.<br>
+                더 많은 공간과 더 나은 프라이버시를 제공합니다.
+            </p>
 
-        <!-- 1호실 큰방 -->
-        <div class="glass-card" style="border-color: rgba(0, 229, 255, 0.3);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                <div style="flex: 1;">
-                    <div style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">큰방 (거실)</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted);">
-                        <li>▸ <strong>인원:</strong> 남성 6명</li>
-                        <li>▸ <strong>침구:</strong> 바닥 (이불 매일 폈다 접었다)</li>
-                        <li>▸ <strong>분위기:</strong> 라운지 & 와일드 존</li>
-                        <li>▸ <strong>특징:</strong> 약간의 희생 필요 (바닥 생활)</li>
-                        <li>▸ <strong>코골이:</strong> <span style="color: var(--highlight)">허용</span></li>
-                    </ul>
-                </div>
-                <div style="text-align: right; padding-left: 16px;">
-                    <div style="font-size: 32px; font-weight: 900; color: var(--primary); line-height: 1;">60만원</div>
-                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">1인당</div>
-                </div>
-            </div>
-            <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px;">
-                총 360만원 (6명)
-            </div>
-        </div>
+            <div class="comparison-container">
+                <!-- Before -->
+                <div class="comparison-side old">
+                    <div class="comparison-badge old">2024/25 시즌</div>
+                    <div class="comparison-title">현재 구조</div>
 
-        <!-- 1호실 작은방 -->
-        <div class="glass-card" style="border-color: rgba(0, 229, 255, 0.3);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                <div style="flex: 1;">
-                    <div style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">작은방</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted);">
-                        <li>▸ <strong>인원:</strong> 남성 4명</li>
-                        <li>▸ <strong>침구:</strong> 침대 제공</li>
-                        <li>▸ <strong>분위기:</strong> 편안한 침대 공간</li>
-                        <li>▸ <strong>특징:</strong> 별도 침실, 프라이버시 보장</li>
-                        <li>▸ <strong>코골이:</strong> <span style="color: var(--highlight)">허용</span></li>
-                    </ul>
-                </div>
-                <div style="text-align: right; padding-left: 16px;">
-                    <div style="font-size: 32px; font-weight: 900; color: var(--primary); line-height: 1;">75만원</div>
-                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">1인당</div>
-                </div>
-            </div>
-            <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px;">
-                총 300만원 (4명)
-            </div>
-        </div>
+                    <div class="room-block">
+                        <div class="room-header">🏠 1호실 (단독 운영)</div>
 
-        <!-- 2호실 Header -->
-        <div style="margin: 32px 0 12px; padding: 8px 0; border-bottom: 2px solid var(--secondary);">
-            <h3 style="font-size: 18px; font-weight: 800; color: var(--secondary);">🔴 2호실 (숙면남 & 여성 공간)</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">숙면 최우선 남성 + 여성 전용 · 베란다: 여성전용 옷행거/장비보관</p>
-        </div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text);">📦 거실 (락커룸)</div>
+                            <div class="room-details">
+                                <div>• 남성 7명</div>
+                                <div>• 바닥 생활</div>
+                                <div>• 베이스캠프 역할</div>
+                            </div>
+                        </div>
 
-        <!-- 2호실 작은방 -->
-        <div class="glass-card" style="border-color: rgba(0, 229, 255, 0.3);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                <div style="flex: 1;">
-                    <div style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">작은방 🔇</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted);">
-                        <li>▸ <strong>인원:</strong> 남성 4명</li>
-                        <li>▸ <strong>침구:</strong> 침대 제공</li>
-                        <li>▸ <strong>분위기:</strong> Silence Zone (절대 정숙)</li>
-                        <li>▸ <strong>특징:</strong> 깊은 수면, 숙면 최우선</li>
-                        <li>▸ <strong>코골이:</strong> <span style="color: var(--secondary)">절대 금지 (적발 시 1호실 이동)</span></li>
-                    </ul>
-                </div>
-                <div style="text-align: right; padding-left: 16px;">
-                    <div style="font-size: 32px; font-weight: 900; color: var(--primary); line-height: 1;">75만원</div>
-                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">1인당</div>
-                </div>
-            </div>
-            <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px;">
-                총 300만원 (4명)
-            </div>
-        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text);">🛏️ 작은방</div>
+                            <div class="room-details">
+                                <div>• 여성 4명</div>
+                                <div>• 침대 4개</div>
+                                <div>• 독립 공간</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- 2호실 큰방 -->
-        <div class="glass-card" style="border-color: rgba(255, 42, 109, 0.3);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                <div style="flex: 1;">
-                    <div style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">큰방 👑</div>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; color: var(--text-muted);">
-                        <li>▸ <strong>인원:</strong> 여성 6명</li>
-                        <li>▸ <strong>침구:</strong> 침대 제공</li>
-                        <li>▸ <strong>분위기:</strong> 여성 전용 공간</li>
-                        <li>▸ <strong>특징:</strong> 독립적이고 쾌적한 환경</li>
-                        <li>▸ <strong>베란다:</strong> <span style="color: var(--secondary)">여성전용 옷행거/장비보관</span></li>
-                    </ul>
+                    <div class="total-count">
+                        <div class="total-count-label">총 인원</div>
+                        <div class="total-count-value old">11명</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">남 7명 / 여 4명</div>
+                    </div>
                 </div>
-                <div style="text-align: right; padding-left: 16px;">
-                    <div style="font-size: 32px; font-weight: 900; color: var(--secondary); line-height: 1;">75만원</div>
-                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">1인당</div>
+
+                <!-- After -->
+                <div class="comparison-side new">
+                    <div class="comparison-badge new">2026/27 시즌</div>
+                    <div class="comparison-title">새로운 구조</div>
+
+                    <div class="room-block" style="border-color: rgba(0, 229, 255, 0.3);">
+                        <div class="room-header">🔵 1호실 (남성 전용)</div>
+
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text);">🎿 거실 (베이스캠프)</div>
+                            <div class="room-details">
+                                <div>• 남성 5명 <span class="price-badge">60+10</span></div>
+                                <div>• 바닥 생활</div>
+                                <div>• 락커룸 겸 베이스캠프</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text);">🛏️ 작은방</div>
+                            <div class="room-details">
+                                <div>• 남성 4명 <span class="price-badge">72+10</span></div>
+                                <div>• 침대 제공</div>
+                                <div>• 편안한 수면 환경</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room-block" style="border-color: rgba(255, 42, 109, 0.3); margin-top: 16px;">
+                        <div class="room-header">🔴 2호실 (NEW!)</div>
+
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text);">🔇 작은방 (Silence Zone)</div>
+                            <div class="room-details">
+                                <div>• 남성 4명 <span class="price-badge">75+10</span></div>
+                                <div>• 침대 제공 · 절대 정숙</div>
+                                <div>• 코골이 금지 (프리미엄)</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text);">👑 큰방 (여성 전용)</div>
+                            <div class="room-details">
+                                <div>• 여성 6명 <span class="price-badge">72+10</span></div>
+                                <div>• 침대 제공</div>
+                                <div>• 독립적이고 쾌적한 환경</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="total-count">
+                        <div class="total-count-label">총 목표 인원</div>
+                        <div class="total-count-value new">19명</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">남 13명 / 여 6명 (주중 멤버)</div>
+                    </div>
                 </div>
             </div>
-            <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px;">
-                총 450만원 (6명)
-            </div>
-        </div>
+        </section>
 
-        <div style="margin-top: 20px; background: linear-gradient(90deg, #1c1c1c, #252525); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #444;">
-            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">총 예상 매출</div>
-            <div style="font-size: 32px; font-weight: 900; color: #00ff88;">1,410만원</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">총 20명 기준 (남 14명 / 여 6명) · 목표 1,200만원 초과 달성</div>
-        </div>
+        <!-- Key Changes -->
+        <section>
+            <div class="key-changes">
+                <h3>✨ 핵심 변화 포인트</h3>
+                <div class="changes-list">
+                    <div class="change-item">
+                        <div class="change-item-title">📈 규모 확장</div>
+                        <div class="change-item-desc">1호실만 운영 → 1호실 + 2호실 동시 운영으로 73% 인원 증가 (11명→19명)</div>
+                    </div>
+                    <div class="change-item">
+                        <div class="change-item-title">🔒 프라이버시 강화</div>
+                        <div class="change-item-desc">공간 분리 전략으로 라이프스타일별 맞춤 환경 제공 (Base Camp / Comfort / Silence Zone)</div>
+                    </div>
+                    <div class="change-item">
+                        <div class="change-item-title">🚺 여성 공간 확대</div>
+                        <div class="change-item-desc">작은방 4명 → 큰방 6명으로 업그레이드, 2호실 전체를 여성 전용 공간으로 확보</div>
+                    </div>
+                    <div class="change-item">
+                        <div class="change-item-title">🛏️ 숙면 옵션 추가</div>
+                        <div class="change-item-desc">코골이 걱정 없는 Silence Zone 신설 (2호실 작은방), 깊은 수면 보장</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div style="margin-top: 16px; background: var(--card-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--card-border);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 13px; font-weight: 600;">게스트 요금 (1박)</span>
-                <span style="font-size: 15px; font-weight: 700; color: var(--highlight);">3만원</span>
-            </div>
-        </div>
-    </section>
+        <!-- Benefits -->
+        <section>
+            <h2>🎯 업그레이드의 장점</h2>
+            <p class="section-desc">더 많은 선택지, 더 나은 경험을 제공합니다</p>
 
-    <!-- Automation System -->
-    <section>
-        <h2>⚙️ 역할 기반 자동화 시스템</h2>
-        <p class="section-desc">명확한 역할과 혜택으로 효율적인 운영</p>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎿</div>
+                    <div class="benefit-title">다양한 선택지</div>
+                    <div class="benefit-desc">
+                        예산과 라이프스타일에 맞는 공간 선택 가능<br>
+                        60만원(베이스캠프) ~ 75만원(프리미엄 정숙)
+                    </div>
+                </div>
 
-        <div class="role-card">
-            <div class="role-header">
-                <span class="role-icon">💬</span>
-                <span class="role-title">칭찬 문화 관리자</span>
-            </div>
-            <div class="role-duty">
-                <strong>담당 업무:</strong> AI 기반 익명 칭찬 게시글 승인, 비참여자 넛지
-            </div>
-            <div class="role-benefit">
-                ✓ 집안일 100% 면제 (설거지/쓰레기)
-            </div>
-        </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔐</div>
+                    <div class="benefit-title">향상된 프라이버시</div>
+                    <div class="benefit-desc">
+                        호실 분리로 남녀 공간 명확히 구분<br>
+                        침대 제공 비율 증가 (4명→14명)
+                    </div>
+                </div>
 
-        <div class="role-card">
-            <div class="role-header">
-                <span class="role-icon">💳</span>
-                <span class="role-title">정산 관리자</span>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-title">안정적 운영</div>
+                    <div class="benefit-desc">
+                        19명 주중 멤버 체계로 안정적 커뮤니티 구축<br>
+                        역할 기반 자동화 시스템 유지
+                    </div>
+                </div>
             </div>
-            <div class="role-duty">
-                <strong>담당 업무:</strong> 주간 N빵 정산 수거, 납부 마감일 관리
-            </div>
-            <div class="role-benefit">
-                ✓ 집안일 100% 면제 (설거지/쓰레기)
-            </div>
-        </div>
+        </section>
 
-        <div class="role-card">
-            <div class="role-header">
-                <span class="role-icon">📦</span>
-                <span class="role-title">지출 관리자</span>
-            </div>
-            <div class="role-duty">
-                <strong>담당 업무:</strong> 공용 물품 구매, 재고 관리 및 영수증 감사
-            </div>
-            <div class="role-benefit">
-                ✓ 집안일 100% 면제 (설거지/쓰레기)
-            </div>
-        </div>
+    </div>
 
-        <div class="role-card">
-            <div class="role-header">
-                <span class="role-icon">🎉</span>
-                <span class="role-title">이벤트 기획자</span>
-            </div>
-            <div class="role-duty">
-                <strong>담당 업무:</strong> 월간 테마 파티 기획 (월 1회), 메뉴 선정
-            </div>
-            <div class="role-benefit">
-                ✓ 파티 참가비 면제 (무료 입장)
-            </div>
-        </div>
-    </section>
-
-    <!-- Tech Stack -->
-    <section>
-        <h2>🚀 기술 기능</h2>
-        <p class="section-desc">현대적인 자동화 인프라 기반 구축</p>
-
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">🤖</div>
-                <div class="feature-name">AI 칭찬</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">💸</div>
-                <div class="feature-name">스마트 정산</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">📱</div>
-                <div class="feature-name">모바일 웹</div>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div style="text-align: center; color: var(--text-muted); font-size: 12px; line-height: 1.8;">
-            모든 운영은 모바일 웹 인터페이스로 관리됩니다.<br>
-            자동 계산 · 실시간 알림 · 익명 피드백 시스템
-        </div>
-    </section>
-
-    <!-- Floating CTA -->
-    <div class="floating-cta">
-        <button class="cta-btn" onclick="handleConfirm()">
-            ✓ 확인
-        </button>
+    <!-- CTA -->
+    <div class="cta-section">
+        <h2 style="margin-bottom: 20px;">26/27 시즌, 함께 하시겠습니까?</h2>
+        <p style="font-size: 16px; color: var(--text-muted); margin-bottom: 32px;">
+            기존 멤버 우선 선택권 제공 · 원하는 공간을 먼저 선택하세요
+        </p>
+        <a href="/2627-2" class="cta-btn">상세 가격 및 공간 정보 보기 →</a>
     </div>
 
     <script>
-        function handleConfirm() {
-            alert('관심 가져주셔서 감사합니다!\n\n계약 절차가 시작됩니다.\n자세한 내용은 이메일로 전달드립니다.');
-        }
-
         // Smooth scroll enhancement
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -614,5 +594,4 @@
         });
     </script>
 
-</body>
-</html>
+</body></html>
