@@ -6,7 +6,12 @@
       "permanent": true
     },
     {
-      "source": "/privacy/:path*",
+      "source": "/privacy/",
+      "destination": "/mailxc/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/privacy/:path+",
       "destination": "/mailxc/privacy-policy",
       "permanent": true
     }
