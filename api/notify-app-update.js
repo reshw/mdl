@@ -60,21 +60,25 @@ module.exports = async (req, res) => {
   const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
   const version = String(body.version || "").trim();
   const notes = String(body.notes || "").trim();
-  const url = String(body.url || "").trim() || DEFAULT_URL;
 
   if (!version || !notes) {
     return res.status(400).json({ error: "버전과 변경 내용을 입력하세요." });
+  }
+  if (version.length > 20 || notes.length > 300) {
+    return res.status(400).json({ error: "버전은 20자, 변경 내용은 300자 이내여야 합니다." });
   }
 
   try {
     ensureApp();
     const messageId = await getMessaging().send({
       topic: TOPIC,
+      // url은 호출자에게서 받지 않는다. 앱이 data["url"]을 그대로 ACTION_VIEW로 열기 때문에
+      // 임의 URL을 받으면 "MailXC 업데이트" 알림으로 아무 사이트나 열게 만들 수 있다(피싱).
       data: {
         type: "update",
         title: `MailXC v${version} 업데이트`,
         body: notes,
-        url,
+        url: DEFAULT_URL,
       },
       android: { priority: "high" },
     });
