@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="MDL 관리자">
+    <title>관리자 - MDL</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .admin-main {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-4xl) + var(--spacing-lg)) var(--spacing-lg) var(--spacing-4xl);
+        }
+        .admin-eyebrow {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-gray);
+            margin-bottom: var(--spacing-xs);
+        }
+        .admin-main h1 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-sm);
+        }
+        .admin-lead {
+            color: var(--medium-gray);
+            line-height: 1.8;
+            margin-bottom: var(--spacing-2xl);
+        }
+        .admin-card {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: var(--spacing-lg);
+        }
+        .admin-card h2 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-md);
+            letter-spacing: 0.5px;
+        }
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        .form-row > span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            letter-spacing: 0.5px;
+        }
+        .form-row input,
+        .form-row textarea {
+            padding: var(--spacing-sm);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: var(--light-gray);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            transition: var(--transition);
+            color: var(--dark-gray);
+            border-radius: 0;
+            width: 100%;
+        }
+        .form-row textarea {
+            resize: vertical;
+        }
+        .form-row input:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: var(--primary-black);
+            background-color: var(--white);
+        }
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--accent-gray);
+        }
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+        }
+        .remember-row input {
+            width: auto;
+        }
+        .status {
+            padding: var(--spacing-sm);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            display: none;
+        }
+        .status.show {
+            display: block;
+        }
+        .status.ok {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        .status.err {
+            background: #fdf0f0;
+            color: #8a2b2b;
+        }
+        .preview {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-sm);
+            background: var(--light-gray);
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+            line-height: 1.7;
+        }
+        .preview strong {
+            color: var(--dark-gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">MDL</a>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">홈</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <p class="admin-eyebrow">Admin</p>
+        <h1>관리자</h1>
+        <p class="admin-lead">MailXC 안드로이드 테스터에게 앱 업데이트 알림을 보냅니다.</p>
+
+        <div class="admin-card">
+            <h2>안드로이드 앱 업데이트 알림</h2>
+            <form class="admin-form" id="updateForm">
+                <label class="form-row">
+                    <span>관리자 비밀번호</span>
+                    <input type="password" id="adminPassword" autocomplete="current-password" required>
+                </label>
+                <label class="remember-row">
+                    <input type="checkbox" id="rememberPassword">
+                    이 기기에 비밀번호 기억
+                </label>
+
+                <label class="form-row">
+                    <span>버전</span>
+                    <input type="text" id="version" placeholder="예: 1.2" required>
+                </label>
+
+                <label class="form-row">
+                    <span>변경 내용</span>
+                    <textarea id="notes" rows="4" placeholder="예: 키보드가 화면 가리던 버그 고침, 다크모드 개선" required></textarea>
+                </label>
+
+                <button type="submit" class="submit-button" id="sendButton">테스터에게 알림 보내기</button>
+                <p class="status" id="status"></p>
+                <p class="form-hint">
+                    <code>app_updates</code> 토픽 구독자 전원에게 즉시 발송됩니다. 취소할 수 없습니다.
+                </p>
+            </form>
+
+            <div class="preview" id="preview">
+                <strong>알림 미리보기</strong><br>
+                제목: MailXC v<span id="pvVersion">—</span> 업데이트<br>
+                내용: <span id="pvNotes">—</span><br>
+                탭 시: Play 스토어(kr.mdl.mailer)
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Maum Design Lab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        var PW_KEY = 'mdl_admin_pw';
+        var passwordInput = document.getElementById('adminPassword');
+        var rememberBox = document.getElementById('rememberPassword');
+        var versionInput = document.getElementById('version');
+        var notesInput = document.getElementById('notes');
+        var sendButton = document.getElementById('sendButton');
+        var statusEl = document.getElementById('status');
+
+        var saved = localStorage.getItem(PW_KEY);
+        if (saved) {
+            passwordInput.value = saved;
+            rememberBox.checked = true;
+        }
+
+        function setStatus(kind, text) {
+            statusEl.className = 'status show ' + kind;
+            statusEl.textContent = text;
+        }
+
+        function updatePreview() {
+            document.getElementById('pvVersion').textContent = versionInput.value.trim() || '—';
+            document.getElementById('pvNotes').textContent = notesInput.value.trim() || '—';
+        }
+        versionInput.addEventListener('input', updatePreview);
+        notesInput.addEventListener('input', updatePreview);
+
+        document.getElementById('updateForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var password = passwordInput.value;
+            var version = versionInput.value.trim();
+            var notes = notesInput.value.trim();
+            if (!password || !version || !notes) return;
+
+            if (!confirm('MailXC v' + version + ' 업데이트 알림을 테스터 전원에게 보냅니다. 계속할까요?')) return;
+
+            if (rememberBox.checked) {
+                localStorage.setItem(PW_KEY, password);
+            } else {
+                localStorage.removeItem(PW_KEY);
+            }
+
+            sendButton.disabled = true;
+            sendButton.textContent = '보내는 중…';
+            statusEl.className = 'status';
+
+            fetch('/api/notify-app-update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-admin-password': password
+                },
+                body: JSON.stringify({ version: version, notes: notes })
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    return { ok: res.ok, data: data };
+                });
+            }).then(function (r) {
+                if (!r.ok) {
+                    setStatus('err', r.data.error || '발송에 실패했습니다.');
+                    return;
+                }
+                setStatus('ok', '발송 완료. messageId: ' + r.data.messageId);
+                notesInput.value = '';
+                updatePreview();
+            }).catch(function () {
+                setStatus('err', '요청 중 오류가 발생했습니다.');
+            }).finally(function () {
+                sendButton.disabled = false;
+                sendButton.textContent = '테스터에게 알림 보내기';
+            });
+        });
+    </script>
+</body>
+</html>
