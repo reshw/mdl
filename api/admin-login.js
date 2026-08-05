@@ -36,22 +36,20 @@ module.exports = async (req, res) => {
 
   const mailEmail = `${id}@${MAIL_DOMAIN}`;
 
+  // 실패 응답은 원인과 무관하게 항상 동일하다. 없는 아이디 / 비관리자 / 틀린 비밀번호를
+  // 구분해서 답하면 비밀번호 없이도 "누가 존재하고 누가 관리자인지" 열거할 수 있다.
+  const DENIED = { status: 401, body: { error: "아이디 또는 비밀번호가 올바르지 않습니다." } };
+  const deny = (reason) => {
+    console.warn(`[admin-login] 거부(${reason}):`, mailEmail);
+    return res.status(DENIED.status).json(DENIED.body);
+  };
+
   try {
     const doc = await getFirestore().collection("members").doc(mailEmail).get();
-    if (!doc.exists) {
-      return res.status(401).json({ error: "아이디 또는 비밀번호가 올바르지 않습니다." });
-    }
+    if (!doc.exists) return deny("문서 없음");
 
     const { personalEmail, isAdmin = false } = doc.data();
-    if (!personalEmail) {
-      return res.status(401).json({ error: "계정 정보가 올바르지 않습니다." });
-    }
-
-    // 관리자 전용 페이지 — 비관리자는 비밀번호가 맞아도 토큰을 발급하지 않는다.
-    if (isAdmin !== true) {
-      console.warn("[admin-login] 관리자 아님:", mailEmail);
-      return res.status(403).json({ error: "관리자 권한이 없습니다." });
-    }
+    if (!personalEmail) return deny("personalEmail 없음");
 
     const r = await fetch(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
@@ -62,13 +60,11 @@ module.exports = async (req, res) => {
       }
     );
     const auth = await r.json();
+    if (auth.error) return deny(`Firebase Auth: ${auth.error.message}`);
 
-    if (auth.error) {
-      if (auth.error.message === "USER_DISABLED") {
-        return res.status(401).json({ error: "비활성화된 계정입니다." });
-      }
-      return res.status(401).json({ error: "아이디 또는 비밀번호가 올바르지 않습니다." });
-    }
+    // 비밀번호까지 맞은 뒤에야 admin 여부를 가른다 — 순서가 바뀌면 관리자 계정을
+    // 응답으로 구분할 수 있게 된다.
+    if (isAdmin !== true) return deny("관리자 아님");
 
     const token = await getAuth().createCustomToken(auth.localId, { mailEmail, isAdmin: true });
     console.log("[admin-login] 로그인 성공:", mailEmail);
