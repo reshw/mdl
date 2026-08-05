@@ -1,8 +1,6 @@
 const crypto = require("crypto");
-const { initializeApp, getApps, cert } = require("firebase-admin/app");
 const { getMessaging } = require("firebase-admin/messaging");
-const { getAuth } = require("firebase-admin/auth");
-const { getFirestore } = require("firebase-admin/firestore");
+const { ensureApp, getAuth, getFirestore } = require("./_firebase");
 
 // mailer-and(안드로이드) 앱이 시작 시 구독하는 FCM 토픽.
 // data-only 메시지만 보낸다(top-level notification 블록 금지) — 넣으면 앱이 백그라운드일 때
@@ -10,31 +8,6 @@ const { getFirestore } = require("firebase-admin/firestore");
 // MailerMessagingService.showUpdateNotification()의 커스텀 처리가 무시된다.
 const TOPIC = "app_updates";
 const DEFAULT_URL = "https://play.google.com/store/apps/details?id=kr.mdl.mailer";
-
-function ensureApp() {
-  if (getApps().length) return;
-
-  const json = process.env.FIREBASE_ADMIN_SERVICE_ACCOUNT;
-  if (json) {
-    initializeApp({ credential: cert(JSON.parse(json)) });
-    return;
-  }
-
-  const projectId = process.env.FIREBASE_ADMIN_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_ADMIN_CLIENT_EMAIL;
-  const privateKey = process.env.FIREBASE_ADMIN_PRIVATE_KEY;
-  if (!projectId || !clientEmail || !privateKey) {
-    throw new Error("FIREBASE_ADMIN_* 환경변수가 설정되지 않았습니다.");
-  }
-
-  initializeApp({
-    credential: cert({
-      projectId,
-      clientEmail,
-      privateKey: privateKey.replace(/\\n/g, "\n").trim(),
-    }),
-  });
-}
 
 // gw.mdl.kr의 assertAdmin(src/lib/firebase-admin.ts)과 동일한 판정 —
 // isAdmin 커스텀 클레임이 있으면 통과, 없으면 Firestore members/{메일주소}.isAdmin 확인.

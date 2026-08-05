@@ -162,8 +162,8 @@
             <h2>관리자 로그인</h2>
             <form class="admin-form" id="loginForm">
                 <label class="form-row">
-                    <span>메일 주소</span>
-                    <input type="email" id="loginEmail" autocomplete="username" required>
+                    <span>아이디</span>
+                    <input type="text" id="loginId" autocomplete="username" autocapitalize="none" spellcheck="false" required>
                 </label>
                 <label class="form-row">
                     <span>비밀번호</span>
@@ -171,7 +171,7 @@
                 </label>
                 <button type="submit" class="submit-button" id="loginButton">로그인</button>
                 <p class="status" id="loginStatus"></p>
-                <p class="form-hint">gw.mdl.kr과 같은 계정입니다. 관리자 권한이 있어야 발송할 수 있습니다.</p>
+                <p class="form-hint">gw.mdl.kr과 같은 아이디·비밀번호입니다. 관리자 권한이 있는 계정만 로그인됩니다.</p>
             </form>
         </div>
 
@@ -226,7 +226,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
         import {
-            getAuth, signInWithEmailAndPassword, signOut,
+            getAuth, signInWithCustomToken, signOut,
             onAuthStateChanged, setPersistence, browserLocalPersistence
         } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 
@@ -253,34 +253,50 @@
             currentUser = user;
             loginCard.hidden = !!user;
             sendCard.hidden = !user;
-            if (user) {
+            if (!user) return;
+            // 표시용 계정명은 커스텀 클레임의 mailEmail(아이디@mdl.kr). user.email은
+            // Firebase Auth 계정에 등록된 개인 이메일이라 노출하지 않는다.
+            user.getIdTokenResult().then(function (r) {
                 signedIn.innerHTML = '';
                 var who = document.createElement('span');
-                who.textContent = user.email + ' 로 로그인됨';
+                who.textContent = (r.claims.mailEmail || '관리자') + ' 로 로그인됨';
                 var out = document.createElement('button');
                 out.type = 'button';
                 out.textContent = '로그아웃';
                 out.addEventListener('click', function () { signOut(auth); });
                 signedIn.appendChild(who);
                 signedIn.appendChild(out);
-            }
+            });
         });
 
+        // gw.mdl.kr과 같은 흐름 — 아이디/비밀번호를 서버로 보내고 커스텀 토큰을 받아 로그인.
+        // 브라우저가 Firebase에 직접 비밀번호를 보내지 않고, isAdmin 클레임은 서버가 넣는다.
         document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            var email = document.getElementById('loginEmail').value.trim();
+            var id = document.getElementById('loginId').value.trim();
             var pw = document.getElementById('loginPassword').value;
-            if (!email || !pw) return;
+            if (!id || !pw) return;
 
             loginButton.disabled = true;
             loginButton.textContent = '로그인 중…';
             loginStatus.className = 'status';
 
-            signInWithEmailAndPassword(auth, email, pw).then(function () {
+            fetch('/api/admin-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, password: pw })
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    return { ok: res.ok, data: data };
+                });
+            }).then(function (r) {
+                if (!r.ok) throw new Error(r.data.error || '로그인에 실패했습니다.');
+                return signInWithCustomToken(auth, r.data.token);
+            }).then(function () {
                 document.getElementById('loginPassword').value = '';
-            }).catch(function () {
+            }).catch(function (err) {
                 loginStatus.className = 'status show err';
-                loginStatus.textContent = '로그인에 실패했습니다. 메일 주소와 비밀번호를 확인해 주세요.';
+                loginStatus.textContent = err.message || '로그인에 실패했습니다.';
             }).finally(function () {
                 loginButton.disabled = false;
                 loginButton.textContent = '로그인';
