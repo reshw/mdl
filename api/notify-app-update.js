@@ -1,6 +1,8 @@
 const crypto = require("crypto");
 const { initializeApp, getApps, cert } = require("firebase-admin/app");
 const { getMessaging } = require("firebase-admin/messaging");
+const { getAuth } = require("firebase-admin/auth");
+const { getFirestore } = require("firebase-admin/firestore");
 
 // mailer-and(안드로이드) 앱이 시작 시 구독하는 FCM 토픽.
 // data-only 메시지만 보낸다(top-level notification 블록 금지) — 넣으면 앱이 백그라운드일 때
@@ -34,6 +36,17 @@ function ensureApp() {
   });
 }
 
+// gw.mdl.kr의 assertAdmin(src/lib/firebase-admin.ts)과 동일한 판정 —
+// isAdmin 커스텀 클레임이 있으면 통과, 없으면 Firestore members/{메일주소}.isAdmin 확인.
+async function verifyAdmin(idToken) {
+  const decoded = await getAuth().verifyIdToken(idToken);
+  const email = decoded.mailEmail || decoded.email || null;
+  if (decoded.isAdmin === true) return { ok: true, email };
+  if (!email) return { ok: false, email: null };
+  const doc = await getFirestore().collection("members").doc(email).get();
+  return { ok: doc.exists && doc.data()?.isAdmin === true, email };
+}
+
 function passwordMatches(given) {
   const expected = process.env.ADMIN_PASSWORD || "";
   if (!expected || typeof given !== "string" || !given) return false;
@@ -53,8 +66,29 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: "서버에 ADMIN_PASSWORD가 설정되지 않았습니다." });
   }
 
+  // 1단계: Firebase 관리자 계정 검증 (gw.mdl.kr과 같은 관리자 명단)
+  const idToken = (req.headers.authorization || "").replace(/^Bearer\s+/i, "").trim();
+  if (!idToken) {
+    return res.status(401).json({ error: "로그인이 필요합니다." });
+  }
+
+  let admin;
+  try {
+    ensureApp();
+    admin = await verifyAdmin(idToken);
+  } catch (e) {
+    console.error("[notify-app-update] 토큰 검증 실패:", e.message);
+    return res.status(401).json({ error: "로그인이 만료되었습니다. 다시 로그인해 주세요." });
+  }
+  if (!admin.ok) {
+    console.warn("[notify-app-update] 관리자 아님:", admin.email);
+    return res.status(403).json({ error: "관리자 권한이 없습니다." });
+  }
+
+  // 2단계: 발송 전용 키
   if (!passwordMatches(req.headers["x-admin-password"])) {
-    return res.status(401).json({ error: "비밀번호가 올바르지 않습니다." });
+    console.warn("[notify-app-update] 발송 키 불일치:", admin.email);
+    return res.status(401).json({ error: "발송 키가 올바르지 않습니다." });
   }
 
   const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
@@ -69,7 +103,6 @@ module.exports = async (req, res) => {
   }
 
   try {
-    ensureApp();
     const messageId = await getMessaging().send({
       topic: TOPIC,
       // url은 호출자에게서 받지 않는다. 앱이 data["url"]을 그대로 ACTION_VIEW로 열기 때문에
@@ -82,7 +115,9 @@ module.exports = async (req, res) => {
       },
       android: { priority: "high" },
     });
-    return res.status(200).json({ ok: true, messageId });
+    // 누가 언제 무엇을 보냈는지 남긴다(Vercel 함수 로그에서 조회).
+    console.log(`[notify-app-update] 발송 by=${admin.email} v=${version} messageId=${messageId}`);
+    return res.status(200).json({ ok: true, messageId, sentBy: admin.email });
   } catch (e) {
     console.error("[notify-app-update] 발송 실패:", e);
     return res.status(500).json({ error: e.message || "발송에 실패했습니다." });

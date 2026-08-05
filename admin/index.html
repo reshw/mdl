@@ -117,6 +117,29 @@
         .preview strong {
             color: var(--dark-gray);
         }
+        .signed-in {
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        .signed-in button {
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #loginCard[hidden],
+        #sendCard[hidden] {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -135,16 +158,34 @@
         <h1>관리자</h1>
         <p class="admin-lead">MailXC 안드로이드 테스터에게 앱 업데이트 알림을 보냅니다.</p>
 
-        <div class="admin-card">
+        <div class="admin-card" id="loginCard">
+            <h2>관리자 로그인</h2>
+            <form class="admin-form" id="loginForm">
+                <label class="form-row">
+                    <span>메일 주소</span>
+                    <input type="email" id="loginEmail" autocomplete="username" required>
+                </label>
+                <label class="form-row">
+                    <span>비밀번호</span>
+                    <input type="password" id="loginPassword" autocomplete="current-password" required>
+                </label>
+                <button type="submit" class="submit-button" id="loginButton">로그인</button>
+                <p class="status" id="loginStatus"></p>
+                <p class="form-hint">gw.mdl.kr과 같은 계정입니다. 관리자 권한이 있어야 발송할 수 있습니다.</p>
+            </form>
+        </div>
+
+        <div class="admin-card" id="sendCard" hidden>
             <h2>안드로이드 앱 업데이트 알림</h2>
+            <p class="signed-in" id="signedIn"></p>
             <form class="admin-form" id="updateForm">
                 <label class="form-row">
-                    <span>관리자 비밀번호</span>
-                    <input type="password" id="adminPassword" autocomplete="current-password" required>
+                    <span>발송 키</span>
+                    <input type="password" id="adminPassword" autocomplete="off" required>
                 </label>
                 <label class="remember-row">
                     <input type="checkbox" id="rememberPassword">
-                    이 기기에 비밀번호 기억
+                    이 기기에 발송 키 기억
                 </label>
 
                 <label class="form-row">
@@ -182,7 +223,70 @@
         </div>
     </footer>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+        import {
+            getAuth, signInWithEmailAndPassword, signOut,
+            onAuthStateChanged, setPersistence, browserLocalPersistence
+        } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+
+        // gw.mdl.kr과 동일한 Firebase 프로젝트. 이 설정값들은 클라이언트에 공개되는 값이다
+        // (비밀이 아니며, 실제 접근 통제는 서버의 verifyIdToken + isAdmin 검사가 한다).
+        var app = initializeApp({
+            apiKey: 'AIzaSyB7YGie98rhJNHRoQritGBEyM15WtGq6A4',
+            authDomain: 'emailer-71608.firebaseapp.com',
+            projectId: 'emailer-71608',
+            messagingSenderId: '822212027928',
+            appId: '1:822212027928:web:96088215dc3aad0092456d'
+        });
+        var auth = getAuth(app);
+        setPersistence(auth, browserLocalPersistence);
+
+        var loginCard = document.getElementById('loginCard');
+        var sendCard = document.getElementById('sendCard');
+        var loginStatus = document.getElementById('loginStatus');
+        var loginButton = document.getElementById('loginButton');
+        var signedIn = document.getElementById('signedIn');
+        var currentUser = null;
+
+        onAuthStateChanged(auth, function (user) {
+            currentUser = user;
+            loginCard.hidden = !!user;
+            sendCard.hidden = !user;
+            if (user) {
+                signedIn.innerHTML = '';
+                var who = document.createElement('span');
+                who.textContent = user.email + ' 로 로그인됨';
+                var out = document.createElement('button');
+                out.type = 'button';
+                out.textContent = '로그아웃';
+                out.addEventListener('click', function () { signOut(auth); });
+                signedIn.appendChild(who);
+                signedIn.appendChild(out);
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var email = document.getElementById('loginEmail').value.trim();
+            var pw = document.getElementById('loginPassword').value;
+            if (!email || !pw) return;
+
+            loginButton.disabled = true;
+            loginButton.textContent = '로그인 중…';
+            loginStatus.className = 'status';
+
+            signInWithEmailAndPassword(auth, email, pw).then(function () {
+                document.getElementById('loginPassword').value = '';
+            }).catch(function () {
+                loginStatus.className = 'status show err';
+                loginStatus.textContent = '로그인에 실패했습니다. 메일 주소와 비밀번호를 확인해 주세요.';
+            }).finally(function () {
+                loginButton.disabled = false;
+                loginButton.textContent = '로그인';
+            });
+        });
+
         var PW_KEY = 'mdl_admin_pw';
         var passwordInput = document.getElementById('adminPassword');
         var rememberBox = document.getElementById('rememberPassword');
@@ -216,8 +320,12 @@
             var version = versionInput.value.trim();
             var notes = notesInput.value.trim();
             if (!password || !version || !notes) return;
+            if (!currentUser) {
+                setStatus('err', '로그인이 필요합니다.');
+                return;
+            }
 
-            if (!confirm('MailXC v' + version + ' 업데이트 알림을 테스터 전원에게 보냅니다. 계속할까요?')) return;
+            if (!confirm('MailXC v' + version + ' 업데이트 알림을 앱이 설치된 모든 기기에 보냅니다. 계속할까요?')) return;
 
             if (rememberBox.checked) {
                 localStorage.setItem(PW_KEY, password);
@@ -229,13 +337,16 @@
             sendButton.textContent = '보내는 중…';
             statusEl.className = 'status';
 
-            fetch('/api/notify-app-update', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-admin-password': password
-                },
-                body: JSON.stringify({ version: version, notes: notes })
+            currentUser.getIdToken().then(function (token) {
+                return fetch('/api/notify-app-update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token,
+                        'x-admin-password': password
+                    },
+                    body: JSON.stringify({ version: version, notes: notes })
+                });
             }).then(function (res) {
                 return res.json().then(function (data) {
                     return { ok: res.ok, data: data };
