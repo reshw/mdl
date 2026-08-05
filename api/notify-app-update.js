@@ -72,9 +72,17 @@ module.exports = async (req, res) => {
     return res.status(401).json({ error: "로그인이 필요합니다." });
   }
 
-  let admin;
+  // 서버 자격증명 문제와 토큰 문제를 구분한다 — 뭉치면 환경변수가 깨졌을 때도
+  // "로그인이 만료되었습니다"만 떠서 원인을 찾을 수 없다.
   try {
     ensureApp();
+  } catch (e) {
+    console.error("[notify-app-update] Firebase 초기화 실패:", e.message);
+    return res.status(500).json({ error: "서버 Firebase 자격증명이 올바르지 않습니다. FIREBASE_ADMIN_SERVICE_ACCOUNT를 확인하세요." });
+  }
+
+  let admin;
+  try {
     admin = await verifyAdmin(idToken);
   } catch (e) {
     console.error("[notify-app-update] 토큰 검증 실패:", e.message);
