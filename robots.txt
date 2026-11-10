@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api
 
-Sitemap: https://mdl.kr/sitemap.xml
+Sitemap: https://www.mdl.kr/sitemap.xml
