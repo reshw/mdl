@@ -3,262 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="마음디자인랩(MDL) - 미니멀한 의류 그 이상의 가치">
-    <title>MDL - Maum Design Lab</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>마음디자인 랩 | 서울 갤러리 공간의 요가·웰니스 프로그램</title>
+    <meta name="description" content="마음디자인 랩은 서울의 갤러리 더비아(THE VIA)에서 나디아요가 클래스, 사운드 배스, 전시 연계 웰니스, 한강변 러닝 프로그램을 운영하는 웰니스 운영사입니다.">
+    <link rel="canonical" href="https://mdl.kr/">
+    <meta name="theme-color" content="#f4f1ec">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="마음디자인 랩">
+    <meta property="og:url" content="https://mdl.kr/">
+    <meta property="og:title" content="마음디자인 랩 | 갤러리에서 만나는 요가·웰니스">
+    <meta property="og:description" content="서울의 갤러리 더비아(THE VIA)에서 나디아요가 클래스와 웰니스 프로그램을 운영합니다.">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="assets/css/home.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://mdl.kr/#organization",
+          "name": "마음디자인 랩",
+          "alternateName": ["마음디자인랩", "Maum Design Lab", "MDL"],
+          "url": "https://mdl.kr/",
+          "description": "서울의 갤러리 더비아(THE VIA)에서 요가·사운드 배스·전시 연계 웰니스·러닝 프로그램을 기획하고 운영하는 웰니스 운영사.",
+          "founder": { "@type": "Person", "name": "양석환" },
+          "email": "sally@mdl.kr",
+          "telephone": "+82-10-9070-2857",
+          "areaServed": { "@type": "City", "name": "서울" },
+          "knowsAbout": ["요가", "사운드 배스", "웰니스", "러닝"],
+          "brand": { "@id": "https://nadia.mdl.kr/#brand" },
+          "location": { "@id": "https://mdl.kr/#thevia" },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "sally@mdl.kr",
+            "telephone": "+82-10-9070-2857",
+            "availableLanguage": "Korean"
+          }
+        },
+        {
+          "@type": "Brand",
+          "@id": "https://nadia.mdl.kr/#brand",
+          "name": "나디아요가",
+          "url": "https://nadia.mdl.kr/",
+          "description": "마음디자인 랩이 더비아 갤러리에서 운영하는 요가 클래스의 콘텐츠 브랜드."
+        },
+        {
+          "@type": "Place",
+          "@id": "https://mdl.kr/#thevia",
+          "name": "더비아 (THE VIA)",
+          "description": "마음디자인 랩의 웰니스 프로그램이 열리는 서울의 사설 갤러리. 한강 청담나들목까지 도보 약 5분.",
+          "address": { "@type": "PostalAddress", "addressLocality": "서울", "addressCountry": "KR" }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://mdl.kr/#website",
+          "url": "https://mdl.kr/",
+          "name": "마음디자인 랩",
+          "inLanguage": "ko-KR",
+          "publisher": { "@id": "https://mdl.kr/#organization" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "마음디자인 랩은 어떤 곳인가요?",
+              "acceptedAnswer": { "@type": "Answer", "text": "마음디자인 랩은 서울의 갤러리 더비아(THE VIA)에서 요가와 웰니스 프로그램을 기획하고 운영하는 웰니스 운영사입니다. 공간은 더비아가 제공하고, 프로그램 운영과 판매는 마음디자인 랩이 맡습니다." }
+            },
+            {
+              "@type": "Question",
+              "name": "더비아 갤러리에서는 어떤 프로그램이 열리나요?",
+              "acceptedAnswer": { "@type": "Answer", "text": "나디아요가 클래스, 사운드 배스, 전시와 연계한 웰니스 세션, 그리고 한강 청담나들목까지 도보 약 5분 거리를 활용한 러닝 등 웰니스 연계 프로그램을 운영합니다." }
+            },
+            {
+              "@type": "Question",
+              "name": "나디아요가와는 어떤 관계인가요?",
+              "acceptedAnswer": { "@type": "Answer", "text": "더비아의 요가 클래스는 나디아요가 브랜드로 진행되며, 나디아의 제자 강사진이 수업을 맡습니다." }
+            },
+            {
+              "@type": "Question",
+              "name": "예약은 어떻게 하나요?",
+              "acceptedAnswer": { "@type": "Answer", "text": "수업 일정 확인과 예약·결제는 book.mdl.kr에서 할 수 있습니다. 문의는 sally@mdl.kr 또는 010-9070-2857로 받습니다." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">MDL</div>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#about" class="nav-link">소개</a></li>
-                <li><a href="#philosophy" class="nav-link">철학</a></li>
-                <li><a href="#collection" class="nav-link">컬렉션</a></li>
-                <li><a href="#contact" class="nav-link">연락처</a></li>
-            </ul>
-        </div>
-    </nav>
+    <header class="site-header">
+        <a href="#top" class="wordmark" aria-label="마음디자인 랩 홈">
+            <span class="wordmark-ko">마음디자인 랩</span>
+            <span class="wordmark-en">Maum Design Lab</span>
+        </a>
+        <a href="https://book.mdl.kr" class="header-cta">예약</a>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Maum Design Lab</h1>
-            <p class="hero-subtitle">의류는 자기표현의 가장 순수한 형태</p>
-            <a href="#about" class="cta-button">스토리 알아보기</a>
-        </div>
-    </section>
+    <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+            <p class="eyebrow">Wellness in the Gallery · Seoul</p>
+            <h1 id="hero-title" class="hero-title">작품 사이에서,<br>몸과 마음을 고르다</h1>
+            <p class="hero-lead">마음디자인 랩은 서울의 갤러리 <strong>더비아(THE VIA)</strong>에서 요가와 웰니스 프로그램을 운영합니다. 전시가 걸린 조용한 공간에서 호흡하고, 움직이고, 머무는 시간을 만듭니다.</p>
+            <div class="hero-actions">
+                <a href="https://book.mdl.kr" class="button button-primary">수업 일정 · 예약</a>
+                <a href="#programs" class="button button-ghost">프로그램 보기</a>
+            </div>
+        </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2>마음디자인랩에 대해</h2>
-                <div class="divider"></div>
+        <section id="about" class="section" aria-labelledby="about-title">
+            <div class="section-index">01</div>
+            <div class="section-body">
+                <h2 id="about-title">마음디자인 랩은 어떤 곳인가요?</h2>
+                <p>마음디자인 랩은 서울의 갤러리 더비아에서 요가·웰니스 프로그램을 기획하고 운영하는 웰니스 운영사입니다.</p>
+                <dl class="roles">
+                    <div class="role">
+                        <dt>공간</dt>
+                        <dd>더비아 (THE VIA)<span>서울의 사설 갤러리</span></dd>
+                    </div>
+                    <div class="role">
+                        <dt>운영</dt>
+                        <dd>마음디자인 랩<span>프로그램 기획 · 운영 · 판매</span></dd>
+                    </div>
+                    <div class="role">
+                        <dt>요가</dt>
+                        <dd>나디아요가<span>나디아의 제자 강사진이 진행</span></dd>
+                    </div>
+                </dl>
             </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>마음디자인랩은 단순한 의류 브랜드가 아닙니다.</p>
-                    <p>우리는 미니멀한 디자인 철학을 통해 입는 사람의 개성을 드러내고, 개성을 존중하는 문화를 만들어갑니다.</p>
-                    <p>각 제품은 신중한 선택의 결과물입니다. 소재부터 색상, 핏까지 모든 요소가 의도적으로 결정됩니다.</p>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <h3>2026</h3>
-                        <p>설립</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>100%</h3>
-                        <p>윤리적 생산</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>5</h3>
-                        <p>핵심 컬렉션</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Philosophy Section -->
-    <section id="philosophy" class="philosophy">
-        <div class="container">
-            <div class="section-header">
-                <h2>우리의 철학</h2>
-                <div class="divider"></div>
+        <section id="programs" class="section" aria-labelledby="programs-title">
+            <div class="section-index">02</div>
+            <div class="section-body">
+                <h2 id="programs-title">더비아 갤러리에서는 어떤 프로그램이 열리나요?</h2>
+                <p>더비아 갤러리 × 나디아요가. 갤러리라는 공간의 고요함을 그대로 살린 네 가지 프로그램을 준비하고 있습니다.</p>
+                <ol class="programs">
+                    <li class="program">
+                        <h3>요가 클래스</h3>
+                        <p>나디아요가 브랜드로 진행하는 정규 클래스. 나디아의 제자 강사진이 수업을 맡습니다.</p>
+                    </li>
+                    <li class="program">
+                        <h3>사운드 배스</h3>
+                        <p>울림과 진동에 몸을 맡기고 깊게 쉬어 가는 회복 세션.</p>
+                    </li>
+                    <li class="program">
+                        <h3>전시 연계 프로그램</h3>
+                        <p>지금 걸려 있는 작품과 함께 호흡하고 감상하는, 갤러리에서만 가능한 웰니스 세션.</p>
+                    </li>
+                    <li class="program">
+                        <h3>러닝 · 웰니스 연계</h3>
+                        <p>한강 청담나들목까지 도보 약 5분. 한강변 러닝 등 바깥으로 이어지는 프로그램.</p>
+                    </li>
+                </ol>
             </div>
-            <div class="philosophy-grid">
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">∞</div>
-                    <h3>미니멀리즘</h3>
-                    <p>불필요한 것을 제거하고 본질만 남깁니다. 그것이 우리의 시작입니다.</p>
-                </div>
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">♡</div>
-                    <h3>지속가능성</h3>
-                    <p>환경과 사람을 생각하는 책임감 있는 생산 과정을 약속합니다.</p>
-                </div>
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">✓</div>
-                    <h3>품질</h3>
-                    <p>좋은 것은 오래 간다. 시간이 증명하는 진정한 가치를 추구합니다.</p>
-                </div>
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">◊</div>
-                    <h3>다양성</h3>
-                    <p>모든 몸, 모든 마음, 모든 스타일을 존중합니다. 포용이 우리의 기본입니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Collection Preview -->
-    <section id="collection" class="collection">
-        <div class="container">
-            <div class="section-header">
-                <h2>컬렉션</h2>
-                <div class="divider"></div>
+        <section id="booking" class="section section-booking" aria-labelledby="booking-title">
+            <div class="section-index">03</div>
+            <div class="section-body">
+                <h2 id="booking-title">예약은 어떻게 하나요?</h2>
+                <p>수업 일정 확인과 예약·결제는 마음디자인 랩 예약 페이지(book.mdl.kr)에서 할 수 있습니다.</p>
+                <a href="https://book.mdl.kr" class="button button-primary">book.mdl.kr에서 예약하기</a>
             </div>
-            <div class="collection-grid">
-                <div class="collection-item">
-                    <div class="collection-image" style="background: #f5f5f5;">
-                        <span class="collection-label">ESSENTIAL</span>
-                    </div>
-                    <h3>에센셜</h3>
-                    <p>기본이 되는 핵심 아이템. 시간을 초월하는 디자인</p>
-                </div>
-                <div class="collection-item">
-                    <div class="collection-image" style="background: #efefef;">
-                        <span class="collection-label">MINIMAL</span>
-                    </div>
-                    <h3>미니말</h3>
-                    <p>극도로 절제된 라인. 순수함이 돋보이는 컬렉션</p>
-                </div>
-                <div class="collection-item">
-                    <div class="collection-image" style="background: #e8e8e8;">
-                        <span class="collection-label">BASICS</span>
-                    </div>
-                    <h3>베이직스</h3>
-                    <p>매일 입고 싶은 편안함. 품질과 핏의 조화</p>
-                </div>
-                <div class="collection-item">
-                    <div class="collection-image" style="background: #e0e0e0;">
-                        <span class="collection-label">SEASONAL</span>
-                    </div>
-                    <h3>시즈널</h3>
-                    <p>계절의 감정을 담은 한정판 컬렉션</p>
-                </div>
-                <div class="collection-item">
-                    <div class="collection-image" style="background: #d8d8d8;">
-                        <span class="collection-label">HERITAGE</span>
-                    </div>
-                    <h3>헤리티지</h3>
-                    <p>과거와 현재를 잇는 프리미엄 라인</p>
-                </div>
-                <div class="collection-item">
-                    <div class="collection-image" style="background: #d0d0d0;">
-                        <span class="collection-label">STUDIO</span>
-                    </div>
-                    <h3>스튜디오</h3>
-                    <p>한정된 실험정신. 아티스트와의 협업 시리즈</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Process Section -->
-    <section class="process">
-        <div class="container">
-            <div class="section-header">
-                <h2>우리의 과정</h2>
-                <div class="divider"></div>
+        <section id="contact" class="section" aria-labelledby="contact-title">
+            <div class="section-index">04</div>
+            <div class="section-body">
+                <h2 id="contact-title">문의는 어디로 하나요?</h2>
+                <ul class="contact-list">
+                    <li><span>이메일</span><a href="mailto:sally@mdl.kr">sally@mdl.kr</a></li>
+                    <li><span>전화</span><a href="tel:+821090702857">010-9070-2857</a></li>
+                </ul>
             </div>
-            <div class="process-timeline">
-                <div class="process-item">
-                    <div class="process-number">01</div>
-                    <h3>생각</h3>
-                    <p>시장의 필요보다 본질에서 시작합니다</p>
-                </div>
-                <div class="process-arrow">→</div>
-                <div class="process-item">
-                    <div class="process-number">02</div>
-                    <h3>디자인</h3>
-                    <p>목표와 마음을 담아 형태를 만듭니다</p>
-                </div>
-                <div class="process-arrow">→</div>
-                <div class="process-item">
-                    <div class="process-number">03</div>
-                    <h3>생산</h3>
-                    <p>정직한 방식으로 최고 품질을 보장합니다</p>
-                </div>
-                <div class="process-arrow">→</div>
-                <div class="process-item">
-                    <div class="process-number">04</div>
-                    <h3>배송</h3>
-                    <p>환경을 고려한 방식으로 전달합니다</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2>연락처</h2>
-                <div class="divider"></div>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="info-item">
-                        <h4>이메일</h4>
-                        <p><a href="mailto:hello@mdl.kr">hello@mdl.kr</a></p>
-                    </div>
-                    <div class="info-item">
-                        <h4>전화</h4>
-                        <p><a href="tel:+82-2-0000-0000">+82-2-0000-0000</a></p>
-                    </div>
-                    <div class="info-item">
-                        <h4>주소</h4>
-                        <p>서울시 강남구<br>Design Street 123, Seoul</p>
-                    </div>
-                </div>
-                <form class="contact-form" id="contactForm">
-                    <input type="text" placeholder="이름" required>
-                    <input type="email" placeholder="이메일" required>
-                    <textarea placeholder="메시지" rows="5" required></textarea>
-                    <button type="submit" class="submit-button">메시지 전송</button>
-                </form>
-            </div>
+    <footer class="site-footer">
+        <div class="footer-info">
+            <p class="footer-name">마음디자인 랩 <span>Maum Design Lab</span></p>
+            <p>대표 양석환</p>
+            <p>sally@mdl.kr · 010-9070-2857</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>MDL</h4>
-                    <p>마음디자인랩</p>
-                </div>
-                <div class="footer-section">
-                    <h4>링크</h4>
-                    <ul>
-                        <li><a href="#about">소개</a></li>
-                        <li><a href="#philosophy">철학</a></li>
-                        <li><a href="#collection">컬렉션</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>팔로우</h4>
-                    <ul>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Facebook</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>정보</h4>
-                    <ul>
-                        <li><a href="connect/">문의하기</a></li>
-                        <li><a href="mailxc/privacy-policy/">개인정보</a></li>
-                        <li><a href="#">이용약관</a></li>
-                        <li><a href="#">배송정보</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Maum Design Lab. All rights reserved.</p>
-            </div>
-        </div>
+        <nav class="footer-links" aria-label="기타 링크">
+            <a href="https://book.mdl.kr">예약하기</a>
+            <a href="connect/">앱 지원 · 문의</a>
+            <a href="mailxc/privacy-policy/">MailXC 개인정보처리방침</a>
+        </nav>
+        <p class="footer-copy">&copy; 2026 Maum Design Lab</p>
     </footer>
-
-    <script src="assets/js/script.js"></script>
 </body>
 </html>
